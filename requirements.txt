@@ -1,0 +1,17 @@
+cltk==1.1.6
+future==1.0.0
+ipykernel==7.2.0
+matplotlib==3.10.8
+numpy>=1.25.2
+pandas==2.3.3
+seaborn==0.13.2
+scikit-learn==1.7.2
+seqeval==1.2.2
+tabulate==0.10.0
+tensorflow==2.20.0
+tensorflow-probability==0.7.0
+torch==2.0.1
+torchdata==0.6.1
+torchtext==0.15.2
+tqdm==4.66.1
+transformers==4.30.2
