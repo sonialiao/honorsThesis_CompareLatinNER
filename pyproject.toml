@@ -1,0 +1,30 @@
+[project]
+name = "latin-ner"
+version = "0.1.0"
+description = "Comparing Named Entity Recognition Approaches for Classical Latin"
+readme = "README.md"
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    "cltk==1.1.6",
+    "future==1.0.0",
+    "ipykernel==7.2.0",
+    "llmner",
+    "matplotlib==3.10.8",
+    "numpy>=1.25.2",
+    "pandas==2.3.3",
+    "scikit-learn==1.7.2",
+    "seaborn==0.13.2",
+    "seqeval==1.2.2",
+    "tabulate==0.10.0",
+    "tensor2tensor==1.15.7",
+    "tensorflow==2.20.0",
+    "tensorflow-probability==0.7.0",
+    "torch==2.0.1",
+    "torchdata==0.6.1",
+    "torchtext==0.15.2",
+    "tqdm==4.66.1",
+    "transformers==4.30.2",
+]
+
+[tool.uv.sources]
+llmner = { git = "https://github.com/plncmm/llmner.git", rev = "9a094604050d140a3145be8d06f76b58513b4791" }

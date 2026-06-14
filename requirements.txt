@@ -1,6 +1,7 @@
 cltk==1.1.6
 future==1.0.0
 ipykernel==7.2.0
+llmner @ git+https://github.com/plncmm/llmner.git@9a094604050d140a3145be8d06f76b58513b4791
 matplotlib==3.10.8
 numpy>=1.25.2
 pandas==2.3.3
@@ -8,6 +9,7 @@ seaborn==0.13.2
 scikit-learn==1.7.2
 seqeval==1.2.2
 tabulate==0.10.0
+tensor2tensor==1.15.7 
 tensorflow==2.20.0
 tensorflow-probability==0.7.0
 torch==2.0.1

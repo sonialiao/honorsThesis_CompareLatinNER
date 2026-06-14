@@ -1,7 +1,7 @@
 # Comparing Named Entity Recognition Approaches for Classical Latin
 Undergraduate Honors Thesis — Sonia Liao, University of Massachusetts Amherst, Computer Science Major / Classical Civilization Minor, Class of 2026
 
-[Link to Manuscript (TODO)]
+[Link to Manuscript (UMass Login to PATH portal)](https://honorspaths.honors.umass.edu/chc-paths/completion_forms_document_content/4577/thesis)
 
 ---
 
@@ -90,6 +90,8 @@ library, refactored for Python 3.10 compatibility. You need to pull this in as w
 pip install -r requirements.txt
 ```
 
+> Note: See update below on new way of managing dependencies
+
 ### 5. LLM models (for the prompting pipeline)
 Install [Ollama](https://ollama.com), then pull the open-weight models:
 ```bash
@@ -107,12 +109,17 @@ export ANTHROPIC_API_KEY=your_key_here
 honorsThesis_CompareLatinNER/
 ├── latin-bert/                  # cloned in step 2
 ├── Ner-Latin-RANLP/             # cloned in step 2
-├── subword_text_encoder.py      # included in this repo
+├── subword_text_encoder.py      # cloned in step 3
 ├── LatinNERpipeline.py          # included in this repo (refactored)
-├── load_from_tsv.py
+├── LatinBERT_min_example.ipynb
 ├── latinBERT_tsv_predict.py
-├── mBERT_tsv_predict.py
+├── LatinNERpipeline.py
+├── llmNER_fewShot_min_ex.ipynb
+├── llmNER_min_example.ipynb
 ├── llmNER_tsv_predict.py
+├── load_from_tsv.py
+├── mBERT_min_example.ipynb
+├── mBERT_tsv_predict.py
 ├── predictions_0_*/
 └── results_evaluation.ipynb
 ```
@@ -143,3 +150,15 @@ Prediction outputs for all models are in the `predictions_0_*/` directories. Eva
 | LLM NER prompting framework | [plncmm/llmner](https://github.com/plncmm/llmner) |
 | Subword text encoder | [tensorflow/tensor2tensor](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/data_generators/text_encoder.py) |
 | WikiNEuRal mBERT model | [Babelscape/wikineural-multilingual-ner](https://huggingface.co/Babelscape/wikineural-multilingual-ner) |
+
+---
+
+## Updates: June 2026
+
+- changed package management from Anaconda to uv, which is written in Rust and a more modern tool
+    - `requirements.txt` has been replaced by the combination of `pyproject.toml` and `uv.lock`, the file has been retained for records but uv shouldn't need it anymore
+
+If you have **uv** installed:
+    - run python scripts with `uv run <script name>`
+    - for Jupyter Notebooks, select the kernel directly located in `.venv`
+    - all packages will be auto-installed and managed by uv via `pyproject.toml` and `uv.lock`
