@@ -54,13 +54,43 @@ Gold data is in `Ner-Latin-RANLP/Latin_Gold_Data/`. Silver training data coverin
 
 ## Setup & Dependencies
 
+### 0. Tools / Libraries
+Make sure you have the following libraries before running (e.g. download via Homebrew):
+- `wget`
+- `git lfs`
+
+For Mac:
+```bash
+brew install wget
+```
+```bash
+brew install git-lfs
+```
+
 ### 1. Clone this repo
 ```bash
 git clone https://github.com/sonialiao/honorsThesis_CompareLatinNER.git
 cd honorsThesis_CompareLatinNER
 ```
 
-### 2. Pull third-party repositories
+### 2. Install dependencies
+**Python 3.10 required.**
+
+```bash
+pip install -r requirements.txt
+```
+
+Alternatively, if you have `uv` installed:
+- rebuild the virtual environment with
+    ```bash
+    uv sync
+    ```
+- manually activate the environment with 
+    ```bash
+    source .venv/bin/activate
+    ```
+
+### 3. Pull third-party repositories
 These are excluded from this repo and must be cloned separately into the project root:
 
 ```bash
@@ -72,40 +102,48 @@ git clone https://github.com/dbamman/latin-bert.git
 git clone https://github.com/NER-AncientLanguages/Ner-Latin-RANLP.git
 ```
 
-Then download the LatinBERT model weights into `latin-bert/models/`:
+#### 3.1 Download the LatinBERT model weights into `latin-bert/models/`:
 ```bash
 cd latin-bert
 bash scripts/download.sh
 cd ..
 ```
 
-### 3. Load the subword text encoder
+#### 3.2 Pull the large file from the NER-Latin-RANLP library
+The models are large files and regular clone only gives pointers.
+
+Navigate to the folder:
+```bash
+cd ./Ner-Latin-RANLP
+```
+Install `git lfs`
+```bash
+git lfs install
+```
+Pull `git lfs`
+```bash
+git lfs pull
+```
+
+### 4. Load the subword text encoder
 `subword_text_encoder.py` is a standalone extraction from the deprecated
 [`tensor2tensor`](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/data_generators/text_encoder.py)
 library, refactored for Python 3.10 compatibility. You need to pull this in as well.
 
 ```bash
-wget -O subword_text_encoder.py https://raw.githubusercontent.com/tensorflow/tensor2tensor/master/tensor2tensor/data_generators/text_encoder.py
+curl -o subword_text_encoder.py https://raw.githubusercontent.com/tensorflow/tensor2tensor/master/tensor2tensor/data_generators/text_encoder.py
 ```
-
-### 4. Install dependencies
-**Python 3.10 required.**
-
-```bash
-pip install -r requirements.txt
-```
-
-> Note: if you have `uv` installed:
->   - rebuild the virtual environment with `uv sync`
 
 ### 5. LLM models (for the prompting pipeline)
 Install [Ollama](https://ollama.com), then pull the open-weight models:
 ```bash
 ollama pull mistral-nemo
-ollama pull ministral   # check Ollama's model library for the exact tag
+ollama pull ministral-3:14b
 ```
 
-For Claude Opus 4.7, set your Anthropic API key:
+For Claude Opus 4.7, set your Anthropic API key to the environment variable `ANTHROPIC_API_KEY`
+
+(for Mac system:)
 ```bash
 export ANTHROPIC_API_KEY=your_key_here
 ```
@@ -118,7 +156,6 @@ honorsThesis_CompareLatinNER/
 ├── LatinNERpipeline.py          # included in this repo (refactored)
 ├── LatinBERT_min_example.ipynb
 ├── latinBERT_tsv_predict.py
-├── LatinNERpipeline.py
 ├── llmNER_fewShot_min_ex.ipynb
 ├── llmNER_min_example.ipynb
 ├── llmNER_tsv_predict.py
@@ -129,6 +166,18 @@ honorsThesis_CompareLatinNER/
 ├── results_evaluation.ipynb
 └── subword_text_encoder.py      # loaded in step 3
 ```
+
+---
+
+## Execution
+To run the minimum example Jupyter Notebooks (i.e. `*_min_example.ipynb`):
+
+0. If you are using an IDE, install the corresponding Jupyter extensions
+1. Open the notebook file, and select the appropriate Python kernel
+    - if you use `uv`, the kernel is under `.venv`
+    - if you use Anaconda, the kernel is under `/opts/anaconda3/envs/<your virtual environment name>`
+2. Hit 'Clear all output' to erase existing cell output
+3. Hit 'Run All'
 
 ---
 
