@@ -66,7 +66,8 @@ These are excluded from this repo and must be cloned separately into the project
 ```bash
 # LatinBERT model and scripts
 git clone https://github.com/dbamman/latin-bert.git
-
+```
+```bash
 # NER pipeline and gold/silver data
 git clone https://github.com/NER-AncientLanguages/Ner-Latin-RANLP.git
 ```
@@ -78,10 +79,14 @@ bash scripts/download.sh
 cd ..
 ```
 
-### 3. Restore the subword text encoder
+### 3. Load the subword text encoder
 `subword_text_encoder.py` is a standalone extraction from the deprecated
-[`tensor2tensor`](https://github.com/tensorflow/tensor2tensor/tree/master)
+[`tensor2tensor`](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/data_generators/text_encoder.py)
 library, refactored for Python 3.10 compatibility. You need to pull this in as well.
+
+```bash
+wget -O subword_text_encoder.py https://raw.githubusercontent.com/tensorflow/tensor2tensor/master/tensor2tensor/data_generators/text_encoder.py
+```
 
 ### 4. Install dependencies
 **Python 3.10 required.**
@@ -90,7 +95,8 @@ library, refactored for Python 3.10 compatibility. You need to pull this in as w
 pip install -r requirements.txt
 ```
 
-> Note: See update below on new way of managing dependencies
+> Note: if you have `uv` installed:
+>   - rebuild the virtual environment with `uv sync`
 
 ### 5. LLM models (for the prompting pipeline)
 Install [Ollama](https://ollama.com), then pull the open-weight models:
@@ -109,7 +115,6 @@ export ANTHROPIC_API_KEY=your_key_here
 honorsThesis_CompareLatinNER/
 ├── latin-bert/                  # cloned in step 2
 ├── Ner-Latin-RANLP/             # cloned in step 2
-├── subword_text_encoder.py      # cloned in step 3
 ├── LatinNERpipeline.py          # included in this repo (refactored)
 ├── LatinBERT_min_example.ipynb
 ├── latinBERT_tsv_predict.py
@@ -121,7 +126,8 @@ honorsThesis_CompareLatinNER/
 ├── mBERT_min_example.ipynb
 ├── mBERT_tsv_predict.py
 ├── predictions_0_*/
-└── results_evaluation.ipynb
+├── results_evaluation.ipynb
+└── subword_text_encoder.py      # loaded in step 3
 ```
 
 ---
@@ -158,7 +164,7 @@ Prediction outputs for all models are in the `predictions_0_*/` directories. Eva
 - changed package management from Anaconda to uv, which is written in Rust and a more modern tool
     - `requirements.txt` has been replaced by the combination of `pyproject.toml` and `uv.lock`, the file has been retained for records but uv shouldn't need it anymore
 
-If you have **uv** installed:
+With `uv`, after installation and set up:
     - run python scripts with `uv run <script name>`
     - for Jupyter Notebooks, select the kernel directly located in `.venv`
     - all packages will be auto-installed and managed by uv via `pyproject.toml` and `uv.lock`

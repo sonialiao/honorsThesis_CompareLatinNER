@@ -24,6 +24,7 @@ dependencies = [
     "torchtext==0.15.2",
     "tqdm==4.66.1",
     "transformers==4.30.2",
+    "wget",
 ]
 
 [tool.uv.sources]
